@@ -1,0 +1,51 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 2b1002ba6cf4de9f8df7319c65ebe0f64c6a150dda9c400900f33cb69a674dc4
+
+name:           peanutbuttervibes
+version:        0.1
+description:    TODO
+homepage:       https://github.com/peanutbuttervibes/website#readme
+bug-reports:    https://github.com/peanutbuttervibes/website/issues
+author:         Valentin Iovene
+maintainer:     valentin@peanutbuttervibes.com
+copyright:      2020 Valentin Iovene
+license:        MIT
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/peanutbuttervibes/website
+
+library
+  exposed-modules:
+      KaTeX.KaTeXify
+  other-modules:
+      Paths_peanutbuttervibes
+  hs-source-dirs:
+      src
+  build-depends:
+      base
+    , pandoc
+    , pandoc-types
+    , process
+    , string-conversions
+  default-language: Haskell2010
+
+executable site
+  main-is: Site.hs
+  other-modules:
+      Paths_peanutbuttervibes
+  hs-source-dirs:
+      app
+  build-depends:
+      base
+    , hakyll
+    , peanutbuttervibes
+  default-language: Haskell2010

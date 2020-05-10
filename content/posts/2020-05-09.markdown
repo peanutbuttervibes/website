@@ -1,0 +1,26 @@
+---
+title: This website is statically generated with Hakyll
+---
+Instead of the usual 'hello world' first blog post, let's go through how this
+static website is generated using Hakyll. Maybe this could help someone
+stumbling upon this.
+
+# The reason for choosing Hakyll
+
+Many static website generators exist (e.g. Jekyll in Ruby and Hugo in Go). I
+think none of them is as cool as Hakyll, which uses the great Pandoc in its
+internal. Also, I haven't got myself to write some Haskell yet --- which has
+been on my todo list for quite some time now --- and Hakyll seems like a
+perfect gentle way to get started. *Filling two needs with one deed*.
+
+Useful links:
+
+-   Learn Haskell in Y minutes
+
+    https://learnxinyminutes.com/docs/haskell/
+-   KaTeX and Hakyll (no JS, rendered beforehand)
+
+    https://ifazk.com/blog/2018-11-20-JavaScript-free-Hakyll-site.html
+-   Restructured is better than markdown
+
+    https://thomas-cokelaer.info/tutorials/sphinx/rest_syntax.html

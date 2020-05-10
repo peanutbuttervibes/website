@@ -1,0 +1,30 @@
+name:           peanutbuttervibes
+version:        0.1
+github:         "peanutbuttervibes/website"
+license:        MIT
+author:         "Valentin Iovene"
+maintainer:     "valentin@peanutbuttervibes.com"
+copyright:      "2020 Valentin Iovene"
+
+extra-source-files:
+  - README.md
+
+description:    TODO
+
+library:
+  source-dirs:  src
+  dependencies:
+    - base
+    - pandoc
+    - pandoc-types
+    - process
+    - string-conversions
+
+executables:
+  site:
+    main:           Site.hs
+    source-dirs:    app
+    dependencies:
+      - base
+      - peanutbuttervibes
+      - hakyll

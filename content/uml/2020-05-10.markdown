@@ -1,0 +1,144 @@
+---
+title: Chapter 2 - A gentle start
+katex: true
+---
+
+# Overfitting of polynomial matching
+
+The training set is defined as
+$$
+S = { ( x_i, f(x_i) ) }_{i=1}^m \subseteq (\mathbb{R}^d \times \{0, 1\})^m
+$$
+
+We want to show that
+
+
+$$
+\exists p_S, ( h_S(x) = 1 \Leftrightarrow p_S(x) \geq 0 )
+\quad
+h_S(x) = \begin{cases}
+    y_i & \exists i \in [m], x_i = x \\
+    0 &
+\end{cases}
+$$
+
+There are many possible solutions. One of them is to define $p_S$ as
+
+$$
+p_S(x) = -1 + \sum_{i=1}^m 1_{x = x_i} x^{2m}
+$$
+
+if $\exists i \in [m], x_i = x$ then $p_S(x) \geq 0$ otherwise $p_S(x) < 0$.
+
+
+# Expectation of empirical error is the true error
+
+I believe the exercise description contains an error of notation
+$$
+\begin{aligned}
+    \mathbb{E}_{S|_x \sim \mathcal{D}^m}
+    [ L_S ( h ) ]
+    \quad \text{should be} \quad
+    \mathbb{E}_{S \sim \mathcal{D}^m}
+    [ L_S ( h ) ]
+\end{aligned}
+$$
+because $S$ is a random variable and $S|_x$ is used within the chapter to refer
+to a possible realisation of $S$.
+
+We start by using the expression of $L_S(h)$
+$$
+\begin{aligned}
+    \mathbb{E}_{S \sim \mathcal{D}^m}
+    [ L_S ( h ) ]
+    =
+    \mathbb{E}_{S \sim \mathcal{D}^m}
+    \left[
+        \frac{1}{m}
+        \sum_{i=1}^m
+        \mathbf{1}[h(x_i) \neq f(x_i)]
+    \right]
+\end{aligned}
+$$
+By linearity of the expectation operator
+$$
+\begin{aligned}
+    \mathbb{E}_{S \sim \mathcal{D}^m} [ L_S ( h ) ]
+    & =
+    \frac{1}{m}
+    \sum_{i=1}^m
+    \mathbb{E}_{x_i \sim \mathcal{D}}
+    \left[
+        \mathbf{1}[h(x_i) \neq f(x_i)]
+    \right]
+    \\
+    & =
+    \frac{1}{m}
+    \sum_{i=1}^m
+    \mathbb{P}_{x_i \sim \mathcal{D}}[h(x_i) \neq f(x_i)]
+    \\
+    & =
+    \frac{1}{m}
+    \left(
+        m \times
+        \mathbb{P}_{x \sim \mathcal{D}}[h(x) \neq f(x)]
+    \right)
+    \\
+    & =
+    \mathbb{P}_{x \sim \mathcal{D}}[h(x) \neq f(x)]
+    \\
+    & = L_{\mathcal{D}, f}(h)
+\end{aligned}
+$$
+
+# Axis-aligned rectangles
+
+1.  Let $R(S)$ be the rectangle outputed by algorithm $A$.
+    Our goal is to show that $A$ is an ERM. In other words, that
+    $$
+    R(S) \in
+    \text{ERM}_{\mathcal{H}^2_\text{rec}} ( S )
+    =
+    \argmin_{h \in \mathcal{H}^2_\text{rec}}
+    L_S(h)
+    $$
+    Due to the realizability assumption,
+    $$
+    \exists h^\star \in \mathcal{H}^2_\text{rec}
+    \quad
+    \text{s.t.}
+    \quad
+    L_S(h^\star) = 0
+    $$
+    And thus,
+    $$
+    \left(
+    \forall S \sim \mathcal{D}^m,
+    L_S(R(S)) = 0
+    \right)
+    \Leftrightarrow
+    A \text{ is an ERM}
+    $$
+    Because $R(S)$ is a rectangle that contains all positive examples, it
+    labels all these positive examples correctly. If $R(S)$ was any smaller, it
+    would not contain all the positive examples, and $L_S(R(S))$ would be
+    greater than zero. Due to the realizability assumption, all negative
+    examples must live outside of the smallest rectangle containing the
+    positive examples because otherwise there would not be any rectangle in
+    $\mathcal{H}_\text{rec}^2$ that perfectly labels both the positive and
+    negative examples. Thus, $R(S)$ correctly labels the negative as well.
+    Because all examples in $S$ are labelled correctly by $R(S)$, we have that
+    $L_S(R(S)) = 0$ and thus $R(S) \in \text{ERM}_{\mathcal{H}^2_\text{rec}}$.
+    We conclude that $A$ is an ERM.  $\square$
+
+2.  We follow the proposed steps to derive the proof.
+
+    -   **Showing that $R(S) \subseteq R^\star$** ---
+        Let $x \sim \mathcal{D}$ be a data point in $\mathcal{X}$ that was
+        labeled from $R^\star$. Suppose that $x \in R(S)$. We want to show that
+        $x \in R^\star$ because then $R(S) \subseteq R^\star$. Because $A$ is
+        an ERM and due to the realizability assumption, we have that $L_S(R(S))
+        = 0$: all training examples are labeled according to the real labeling
+        function $f$, based on $R^\star$ here. In particular, we have that
+        $h_{R(S)} = f_{R^\star}(x) = 1$, where $h_{R(S)}$ is the hyothesis
+        function based on
